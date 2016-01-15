@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0" type="plugin" group="user/plug_cbpaidsubscriptions/processors" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:../../../../cb/validation/ahawow.xsd">
+	<name>QuickPay</name>
+	<author>Kyle (aka Krileon)</author>
+	<creationDate>2015-07-13</creationDate>
+	<copyright>(C) 2007-2015 and Trademark of Lightning MultiCom SA, Switzerland - www.joomlapolis.com - and its licensors, all rights reserved</copyright>
+	<license>GNU General Public License version 2 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</license>
+	<authorEmail>beat@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>2.0.10</version>
+	<release>4.0.1</release>
+	<cbsubsversion version="4.0.1" />
+	<description>CBSubs payment gateway plugin for QuickPay payment processor / reseller gateway.</description>
+	<files>
+		<filename plugin="cbpaidsubscriptions.quickpay">cbpaidsubscriptions.quickpay.php</filename>
+		<filename>index.html</filename>
+		<filename>edit.gateway.oem.xml</filename>
+		<filename>edit.gateway.xml</filename>
+	</files>
+    <params>
+    	<param name="remark" type="spacer" label="Parameters settings" default="Settings are done from within the paid subscriptions plugin in payment gateways." description="" />
+    </params>
+	<database>
+	</database>
+</cbinstall>

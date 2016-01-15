@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbxml version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:../../../../cb/validation/ahawow.xsd">
+	<copyright>(C) 2007-2015 and Trademark of Lightning MultiCom SA, Switzerland - www.joomlapolis.com - and its licensors, all rights reserved</copyright>
+	<license>GNU General Public License version 2 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</license>
+	<views>
+		<view name="editgatewayquickpayoem" type="params" ui="admin">
+			<inherit name="editgatewayinherit" from="/*/views/view[@name='editgenericgateway']">
+				<fieldset name="fieldset_for_gateway" label="{PSP} Payment Service Provider (PSP) E-Payments" description="{PSP} PSP E-Payments services settings:">
+					<param name="enabled" type="list" default="0" label="Enable {PSP} E-Payments" description="Whether you want to offer payments through {PSP}.">
+						<option value="0">No</option>
+						<option value="1">Enable single payments</option>
+						<!--	<option value="2">Enable auto-recurring payments</option>
+								<option value="3">Enable single and auto-recurring payments at user's choice</option>  --> 
+					</param>
+					<param name="normal_gateway" type="list" default="1" label="{PSP} server" description="Select the payments gateway to use.">
+						<option value="1">Normal {PSP} server</option>
+						<option value="0">{PSP} test server</option>
+						<option value="2">Other server compatible with {PSP}</option>
+					</param>
+					<if name="normal_gateway" type="showhide" operator="=" value="2" valuetype="const:int">
+						<params name="params" type="params">
+							<param name="gateway_psp_url" type="text" size="60" default="" label="Server submission URL" description="This should be the {PSP}-compatible-server equivalent of {PSPPRODURL}" />
+						</params>
+					</if>
+					<if name="normal_gateway" type="showhide" operator="=" value="9" valuetype="const:int">
+						<params name="params" type="params">
+							<param name="psp_normal_url" type="hidden" label="" value="{PSPPRODURL}" />
+							<param name="psp_test_url" type="hidden" label="" value="{PSPTESTURL}" />
+							<param name="psp_api_normal_url" type="hidden" label="" value="{PSPAPIPRODURL}" />
+							<param name="psp_api_test_url" type="hidden" label="" value="{PSPAPITESTURL}" />
+						</params>
+					</if>
+					<params name="params" type="params">
+						<param name="pspid" type="text" size="30" default="" label="{PSP} QuickpayId" description="Your {PSP} quickpayid, as it appears at {PSP} in Settings - Merchant - &quot;QuickpayId&quot;" />
+						<param name="pspsecret" type="text" size="30" default="" label="{PSP} MD5 secret" description="Your {PSP} md5 secret, as it appears at {PSP} in Settings - MD5 secret - &quot;MD5 secret&quot;" />
+						<param name="pspkey" type="text" size="30" default="" label="{PSP} API key" description="Your {PSP} api key, as it appears at {PSP} in Settings - API Access - &quot;API key&quot;" />
+						<param name="pspprefix" type="text" size="10" default="cbsubs" translate-default="no" label="{PSP} Order ID Prefix" description="Your optional {PSP} order id prefix prepended to all order ids. {PSP} accepts a minimum of 4 characters for order ids. Recommended at least 3 character prefix. Note: alphanumeric characters and dashes only." />
+					</params>
+					<param name="id" type="private" class="cbpaidGatewayAccountquickpayoem" method="renderNotifyUrl" key="id" label="URL to set into {PSP} admin area in Settings - Merchant - &quot;Callback url&quot;" default="First fill-in parameters above, then &quot;Apply&quot; this new gateway settings: Then this URL %s will be computed and displayed." description="This is the &quot;Callback url&quot; to paste into {PSP} admin area" />
+					<param name="id" type="private" class="cbpaidGatewayAccountquickpayoem" method="renderSiteUrl" key="id" label="URL to set into {PSP} admin area in Settings - Merchant - &quot;Shop homepage&quot;" default="First fill-in parameters above, then &quot;Apply&quot; this new gateway settings: Then this URL %s will be computed and displayed." description="This is the &quot;Shop homepage&quot; to paste into {PSP} admin area" />
+					<params name="params" type="params">
+						<param name="language" type="list" default="en" translate-default="no" label="{PSP} user interface language" description="Language shown to the user.">
+							<option value="da">Danish</option>
+							<option value="de">German</option>
+							<option value="en">English</option>
+							<option value="fo">Faeroese</option>
+							<option value="fr">French</option>
+							<option value="kl">Greenlandish</option>
+							<option value="it">Italian</option>
+							<option value="no">Norwegian</option>
+							<option value="nl">Dutch</option>
+							<option value="pl">Polish</option>
+							<option value="ru">Russian</option>
+							<option value="sv">Swedish</option>
+						</param>
+						<fieldset name="fieldset_for_antifraud" label="Anti-Fraud-helping hidden fields" description="If the invoicing address corresponds to credit card invoicing address, sending these in hidden fields to {PSP} might help for anti-fraud:">
+							<param name="givehiddenemail" type="yesno" default="1" label="Send customers email address" description="" />
+							<param name="givehiddenaddress" type="yesno" default="1" label="Send customers invoicing address" description="" />
+							<param name="givehiddentelno" type="yesno" default="1" label="Send customers phone number" description="" />
+						</fieldset>
+						<param name="notifications_host" type="text" size="40" default="" label="Notification host (leave blank)" description="Leave blank for most configurations. This setting is only in case you are running on a cluster and the payment gateway notifications (IPN, PDT) need to go at a different domain name than the website domain. In that case enter e.g. 'http://yourdomain.com'." />
+					</params>
+				</fieldset>
+				<fieldset name="fieldset_for_presentation" label="Presentation on this site" description="">
+					<params name="params" type="params">
+						<param name="psp_human_name" type="text" label="Name of payment provider to show to your customers" value="" size="60" default="{PSP}, our PCI-certified payment service provider" description="This is the name of the payment provider to show to your customers in title of payment button and in feedbacks" />
+					</params>
+					<if name="payment_method_selection_type" operator="=" value="radios" type="condition" nametype="pluginparams:string" valuetype="const:string">
+						<extend toxpathnode="../following-sibling::*[1]/params/fieldset" fromxpathnode="/cbxml/views/view[@name=&quot;radiosettings&quot;]/*" file="xml/admin.lib.processors" mode="prepend">
+							<replaces>
+								<replace attribute="name" from="{SUBMETHOD}" to="single" translate="yes" />
+								<replace attribute="label" from="{SUBMETHOD_TEXT}" to="Single Payment" translate="yes" />
+								<replace attribute="default" from="{SUBMETHOD_DEFAULT_TEXT}" to="Credit Card" translate="yes" />
+							</replaces>
+						</extend>
+					</if>
+					<if name="enabled" type="showhide" operator="regexp" value="^[13]$" valuetype="const:string">
+						<params name="params" type="params">
+							<fieldset name="singleimages" label="Single payments at a time" description="">
+								<param name="image" type="radio" default="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_pay.gif" translate-default="no" label="Payment Button" description="The payment button (visible only if an Intro Text is present or more than one payment processor enabled.">
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_pay.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_pay.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_amex_pay.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_amex_pay.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_am_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_am_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_pay_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_pay_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_pay_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_pay_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_buy_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_buy_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_buy_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_buy_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_click_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_click_subscribe.gif" alt="" /&gt;</option>
+								</param>
+								<param name="custom_image" type="text" size="40" default="" label="Custom Payment Button Text or Image" description="Either text of button or URL of a custom payment image (.gif, .jpg or .bmp), overwites selection above." />
+								<param name="button_title_text" type="text" size="60" default="Pay safely with %s" label="Payment Button hover (title) text" description="Must be text, %s is replaced with the name of the payment method chosen" />
+							</fieldset>
+						</params>
+					</if>
+					<if name="payment_method_selection_type" operator="=" value="radios" type="condition" nametype="pluginparams:string" valuetype="const:string">
+						<extend toxpathnode="../following-sibling::*[1]/params/fieldset" fromxpathnode="/cbxml/views/view[@name=&quot;radiosettings&quot;]/*" file="xml/admin.lib.processors" mode="prepend">
+							<replaces>
+								<replace attribute="name" from="{SUBMETHOD}" to="subscribe" translate="yes" />
+								<replace attribute="label" from="{SUBMETHOD_TEXT}" to="Recurring Payments" translate="yes" />
+								<replace attribute="default" from="{SUBMETHOD_DEFAULT_TEXT}" to="Credit Card (with automatic following payments)" translate="yes" />
+							</replaces>
+						</extend>
+					</if>
+					<if name="enabled" type="showhide" operator="&gt;=" value="2" valuetype="const:int">
+						<params name="params" type="params">
+							<fieldset name="recurringimages" label="Recurring subscribed payments multiple times" description="">
+								<param name="subscribe_image" type="radio" default="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_subscribe.gif" translate-default="no" label="Subscription Button" description="The payments subscriptions button (visible only if an Intro Text is present or more than one payment processor enabled AND recurring paypal payments are enabled.">
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_pay.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_pay.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_amex_pay.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_amex_pay.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_am_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_visa_mc_am_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_pay_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_pay_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_pay_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_pay_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_buy_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_buy_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_buy_now.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_buy_now.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_big_orange_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_subscribe.gif" alt="" /&gt;</option>
+									<option value="components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_click_subscribe.gif">&lt;img src="../components/com_comprofiler/plugin/user/plug_cbpaidsubscriptions/icons/cards/cc_orange_click_subscribe.gif" alt="" /&gt;</option>
+								</param>
+								<param name="subscribe_custom_image" type="text" size="40" default="" label="Custom Subscription Button Text or Image" description="Either text of button or URL of a custom subscription image (.gif, .jpg or .bmp), overwites selection above." />
+								<param name="subscribe_button_title_text" type="text" size="60" default="Subscribe safely with %s" label="Subscription Button hover (title) text" description="Must be text, %s is replaced with the name of the payment method chosen" />
+							</fieldset>
+						</params>
+					</if>
+				</fieldset>
+			</inherit>
+		</view>
+	</views>
+</cbxml>
