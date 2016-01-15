@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cbinstall version="1.0" type="plugin" group="user/plug_cbpaidsubscriptions/processors" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:../../../../cb/validation/ahawow.xsd">
 	<name>QuickPay</name>
-	<author>Kyle (aka Krileon)</author>
-	<creationDate>2015-07-13</creationDate>
+	<author>Kim Løvendahl</author>
+	<creationDate>2016-01-15</creationDate>
 	<copyright>(C) 2007-2015 and Trademark of Lightning MultiCom SA, Switzerland - www.joomlapolis.com - and its licensors, all rights reserved</copyright>
 	<license>GNU General Public License version 2 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</license>
-	<authorEmail>beat@joomlapolis.com</authorEmail>
-	<authorUrl>www.joomlapolis.com</authorUrl>
+	<authorEmail>kl@blkom.dk</authorEmail>
+	<authorUrl>www.blkom.dk</authorUrl>
 	<version>2.0.10</version>
 	<release>4.0.1</release>
 	<cbsubsversion version="4.0.1" />
