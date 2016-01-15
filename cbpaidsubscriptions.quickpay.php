@@ -1290,7 +1290,7 @@ ksort($requestParams);
 					$qp->mode = "subscriptions/";
 	                $addlink = $qp_id."/recurring/";
 	                $process_parameters["amount"] = $qp_amount;
-	                $process_parameters["order_id"] = $qp_order_id."-".$qp_id;
+	                $process_parameters["order_id"] = $paymentBasket->item_number;
 	                $process_parameters["auto_capture"] = TRUE;	
                     $storder = $qp->createorder($qp_order_id, $qp_currency_code, $process_parameters, $addlink);
 
