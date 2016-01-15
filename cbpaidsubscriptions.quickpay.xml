@@ -10,7 +10,7 @@
 	<version>2.0.10</version>
 	<release>4.0.1</release>
 	<cbsubsversion version="4.0.1" />
-	<description>CBSubs payment gateway plugin for QuickPay payment processor / reseller gateway.</description>
+	<description>CBSubs payment gateway plugin for QuickPay v10 payment processor / reseller gateway.</description>
 	<files>
 		<filename plugin="cbpaidsubscriptions.quickpay">cbpaidsubscriptions.quickpay.php</filename>
 		<filename>index.html</filename>
