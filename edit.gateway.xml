@@ -12,7 +12,7 @@
 	</types>
 	<views>
 		<view name="selectgatewayinformation" type="params" ui="admin">
-			<fieldset name="fieldset_getquickpayLinks" label="QuickPay" description="QuickPay is a european payment services provider.">
+			<fieldset name="fieldset_getquickpayLinks" label="QuickPay" description="QuickPay is a european payment services provider. Please note, that only first subscription payment and not auto recurring payments (renewals) is implemented in this basic version. Renewals can be handled in the online Quickpay manager, https://manage.quickpay.net">
 				<param name="quickpayinfolink" type="spacer" label="Information about QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;http://quickpay.net/&quot; /&gt;&lt;strong&gt;QuickPay website&lt;/strong&gt;&lt;/a&gt;" />
 				<param name="quickpayaccountlink" type="spacer" label="Link to your free test-account with QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;https://manage.quickpay.net/&quot; /&gt;&lt;strong&gt;Click here to get your free test account with QuickPay now&lt;/strong&gt;&lt;/a&gt;" />
 			</fieldset>
