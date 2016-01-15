@@ -8,19 +8,32 @@
 				<fieldset name="fieldset_for_gateway" label="{PSP} Payment Service Provider (PSP) E-Payments" description="{PSP} PSP E-Payments services settings:">
 					<param name="enabled" type="list" default="0" label="Enable {PSP} E-Payments" description="Whether you want to offer payments through {PSP}.">
 						<option value="0">No</option>
-						<option value="1">Enable Quickpay single payments</option>
-						<option value="2">Enable subscription payments</option>
-						
+						<option value="1">Enable single payments</option>
+						<!--	<option value="2">Enable auto-recurring payments</option>
+								<option value="3">Enable single and auto-recurring payments at user's choice</option>  --> 
 					</param>
-						<param name="normal_gateway" type="list" default="1" label="Transaction mode" description="For test mode use test payments. see https://tech.quickpay.net/" valuetype="int">
-						<option value="0">API mode</option>
+					<param name="normal_gateway" type="list" default="1" label="{PSP} server" description="Select the payments gateway to use.">
+						<option value="1">Normal {PSP} server</option>
+						<option value="0">{PSP} test server</option>
+						<option value="2">Other server compatible with {PSP}</option>
 					</param>
+					<if name="normal_gateway" type="showhide" operator="=" value="2" valuetype="const:int">
+						<params name="params" type="params">
+							<param name="gateway_psp_url" type="text" size="60" default="" label="Server submission URL" description="This should be the {PSP}-compatible-server equivalent of {PSPPRODURL}" />
+						</params>
+					</if>
+					<if name="normal_gateway" type="showhide" operator="=" value="9" valuetype="const:int">
+						<params name="params" type="params">
+							<param name="psp_normal_url" type="hidden" label="" value="{PSPPRODURL}" />
+							<param name="psp_test_url" type="hidden" label="" value="{PSPTESTURL}" />
+							<param name="psp_api_normal_url" type="hidden" label="" value="{PSPAPIPRODURL}" />
+							<param name="psp_api_test_url" type="hidden" label="" value="{PSPAPITESTURL}" />
+						</params>
+					</if>
 					<params name="params" type="params">
-						<param name="pspid" type="text" size="30" default="" label="{PSP} Merchant Id" description="Your {PSP} Merchant id, as it appears at {PSP} in Settings - integration - &quot;Merchant&quot;" />
-						<param name="privatekey" type="text" size="30" default="" label="{PSP} Private key" description="Your {PSP} private key, as it appears at {PSP} in Settings - integration - &quot;Private key&quot;" />
-						<param name="agreementid" type="text" size="30" default="" label="{PSP} Payment Window agreement id" description="Your {PSP} Payment Window agreement id, as it appears at {PSP} in Settings - integration - &quot;Agreement ID&quot;" />
-						<param name="apikey" type="text" size="30" default="" label="{PSP} Payment Window key" description="Your {PSP} Payment window key, as it appears at {PSP} in Settings - integration - &quot;Payment Window key&quot;" />
-						<param name="apiuserapikey" type="text" size="30" default="" label="{PSP} API User key" description="Your {PSP} API User key, as it appears at {PSP} in Settings - integration - &quot;API user key&quot;" />
+						<param name="pspid" type="text" size="30" default="" label="{PSP} QuickpayId" description="Your {PSP} quickpayid, as it appears at {PSP} in Settings - Merchant - &quot;QuickpayId&quot;" />
+						<param name="pspsecret" type="text" size="30" default="" label="{PSP} MD5 secret" description="Your {PSP} md5 secret, as it appears at {PSP} in Settings - MD5 secret - &quot;MD5 secret&quot;" />
+						<param name="pspkey" type="text" size="30" default="" label="{PSP} API key" description="Your {PSP} api key, as it appears at {PSP} in Settings - API Access - &quot;API key&quot;" />
 						<param name="pspprefix" type="text" size="10" default="cbsubs" translate-default="no" label="{PSP} Order ID Prefix" description="Your optional {PSP} order id prefix prepended to all order ids. {PSP} accepts a minimum of 4 characters for order ids. Recommended at least 3 character prefix. Note: alphanumeric characters and dashes only." />
 					</params>
 					<param name="id" type="private" class="cbpaidGatewayAccountquickpayoem" method="renderNotifyUrl" key="id" label="URL to set into {PSP} admin area in Settings - Merchant - &quot;Callback url&quot;" default="First fill-in parameters above, then &quot;Apply&quot; this new gateway settings: Then this URL %s will be computed and displayed." description="This is the &quot;Callback url&quot; to paste into {PSP} admin area" />

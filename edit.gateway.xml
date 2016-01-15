@@ -12,16 +12,16 @@
 	</types>
 	<views>
 		<view name="selectgatewayinformation" type="params" ui="admin">
-			<fieldset name="fieldset_getquickpayLinks" label="QuickPay" description="QuickPay is a european payment services provider.">
+			<fieldset name="fieldset_getquickpayLinks" label="QuickPay" description="QuickPay is a Denmark payment services provider, available only in Denmark. This gateway supports only single payments. If you need auto-recurring payments, please contact us.">
 				<param name="quickpayinfolink" type="spacer" label="Information about QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;http://quickpay.net/&quot; /&gt;&lt;strong&gt;QuickPay website&lt;/strong&gt;&lt;/a&gt;" />
-				<param name="quickpayaccountlink" type="spacer" label="Link to your free test-account with QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;https://manage.quickpay.net/&quot; /&gt;&lt;strong&gt;Click here to get your free test account with QuickPay now&lt;/strong&gt;&lt;/a&gt;" />
+				<param name="quickpayaccountlink" type="spacer" label="Link to your free test-account with QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;http://quickpay.net/features/manager/&quot; /&gt;&lt;strong&gt;Click here to get your free test account with QuickPay now&lt;/strong&gt;&lt;/a&gt;" />
 			</fieldset>
 		</view>
 		<view name="editgatewayquickpay" type="params" ui="admin">
 			<params name="params" type="params">
 				<if name="pspid" type="condition" operator="=" value="" valuetype="const:string">
-					<fieldset name="fieldset_getquickpayLinks" label="Get your FREE QuickPay Test Account Now" description="If you do not have an QuickPay account with your QuickpayId yet, please use the link below to get a free QuickPay test-account (available world-wide). Please note, that only first subscription payment and not auto recurring payments is implemented in this basic version.">
-						<param name="quickpayaccountlink" type="spacer" label="Link to your free test-account with QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;https://manage.quickpay.net/&quot; /&gt;&lt;strong&gt;Click here to get your free test account with QuickPay now&lt;/strong&gt;&lt;/a&gt;" />
+					<fieldset name="fieldset_getquickpayLinks" label="Get your FREE QuickPay Test Account Now" description="If you do not have an QuickPay account with your QuickpayId yet, please use the link below to get a free QuickPay test-account (available world-wide).">
+						<param name="quickpayaccountlink" type="spacer" label="Link to your free test-account with QuickPay" default="&lt;a target=&quot;_blank&quot; href=&quot;http://quickpay.net/features/manager/&quot; /&gt;&lt;strong&gt;Click here to get your free test account with QuickPay now&lt;/strong&gt;&lt;/a&gt;" />
 					</fieldset>
 				</if>
 			</params>
@@ -31,8 +31,11 @@
 					<replace attribute="description" from="{PSP}" to="QuickPay" translate="yes" />
 					<replace attribute="default" from="{PSP}" to="QuickPay" translate="yes" />
 					<replace attribute="[DATA]" from="{PSP}" to="QuickPay" translate="yes" />
-					<replace attribute="description" from="{PSPPRODURL}" to="payment.quickpay.net/" translate="no" />
-					<replace attribute="value" from="{PSPPRODURL}" to="payment.quickpay.net/" translate="no" />
+					<replace attribute="description" from="{PSPPRODURL}" to="secure.quickpay.dk/form" translate="no" />
+					<replace attribute="value" from="{PSPPRODURL}" to="secure.quickpay.dk/form" translate="no" />
+					<replace attribute="value" from="{PSPTESTURL}" to="secure.quickpay.dk/form" translate="no" />
+					<replace attribute="value" from="{PSPAPIPRODURL}" to="secure.quickpay.dk/api" translate="no" />
+					<replace attribute="value" from="{PSPAPITESTURL}" to="secure.quickpay.dk/api" translate="no" />
 				</replaces>
 			</extend>
 		</view>
